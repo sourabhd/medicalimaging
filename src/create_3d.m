@@ -1,7 +1,7 @@
 
 clear all; close all; clc;
 
-filename = '../data/slicer3d/MRHead.nrrd';
+filename = '../data/MRHead.nrrd';
 [D, meta] = nrrdread(filename);
 
 
