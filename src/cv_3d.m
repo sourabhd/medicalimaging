@@ -17,8 +17,15 @@ dbstop if error;
 % size(I)
 
 %filename = '../data/MRHead.nrrd';
-filename = '../data/MRBrainTumor1.nrrd';
+%filename = '../data/CTChest.nrrd';
+filename = '../data/PreDentalSurgery_1.nrrd';
+%filename = '../data/MRBrainTumor1.nrrd';
 [X, meta] = nrrdread(filename);
+
+size(X)
+[X_l, X_m, X_n] = size(X);
+fprintf('Size of the 3D volume : %d %d %d\n', X_l, X_m, X_n);
+
 
 X([X>255]) = 255;
 h = vol3d('cdata',X,'texture','3D');
@@ -38,7 +45,7 @@ lambda = 0.1;
 %end;
 
 %Parameters
-T = 10;    %Stopping time
+T = 5;    %Stopping time
 dt = 0.2;  %Time step
 a = 0.01;  %Fudge factor to avoid division by zero.
 epsilon = 0.1;  %Epsilon in delta approximation
@@ -56,11 +63,14 @@ X = double(X);
 [m,n,p,k] = size(X);
 %I = double(f);
 
+b_m = 10;
+b_n = 10;
+b_p = 10;
+
 %Initialize with large box around perimeter of image.
-F(1:m,1:n,1:p) = -1;  
+%F(1:m,1:n,1:p) = -1;  
 %F(2:m-1,2:n-1,2:p-1) = 0;  
-F(100:200,100:200,50:100) = 1;
- 
+%F(100:200,100:200,50:100) = 1;
 
 %F(1,:,:) = 0;
 %F(:,1,:) = 0;
@@ -68,6 +78,21 @@ F(100:200,100:200,50:100) = 1;
 %F(m,:,:) = 0;
 %F(:,n,:) = 0;
 %F(:,:,p) = 0;
+
+F = zeros(m,n,p);
+
+% F(1:b_m,:,:)     = -1;
+% F(m-b_m+1:m,:,:) = -1;
+% F(:,1:b_n,:)     = -1;
+% F(:,n-b_n+1,:)   = -1;
+% F(:,:,1:b_p)     = -1;
+% F(:,:,p-b_p+1)   = -1;
+
+F(:,:,:) = -1;
+
+F(b_m+1:m-b_m, b_n+1:n-b_n, b_p+1:p-b_p) = 1;
+
+
 
 figure;
 for t = 0:dt:T
@@ -100,25 +125,26 @@ for t = 0:dt:T
     %subplot(1,3,1); 
     %
     tic;pause(0.01);toc;
-    %axis equal;
-    subplot(3,3,1); imshow(I(:,:,30)); title('Level Set');
-    hold on; contour(F(:,:,30),[0,0],'r'); hold off;
-    subplot(3,3,2); imshow(I(:,:,40)); title('Level Set');
-    hold on; contour(F(:,:,65),[0,0],'r'); hold off;
-    subplot(3,3,3); imshow(I(:,:,50)); title('Level Set');
-    hold on; contour(F(:,:,100),[0,0],'r'); hold off;
-    subplot(3,3,4); imshow(I(:,:,30)); title('Level Set');
-    hold on; contour(F(:,:,30),[0,0],'r'); hold off;
-    subplot(3,3,5); imshow(I(:,:,60)); title('Level Set');
-    hold on; contour(F(:,:,65),[0,0],'r'); hold off;
-    subplot(3,3,6); imshow(I(:,:,70)); title('Level Set');
-    hold on; contour(F(:,:,100),[0,0],'r'); hold off;
-    subplot(3,3,7); imshow(I(:,:,80)); title('Level Set');
-    hold on; contour(F(:,:,30),[0,0],'r'); hold off;
-    subplot(3,3,8); imshow(I(:,:,90)); title('Level Set');
-    hold on; contour(F(:,:,65),[0,0],'r'); hold off;
-    subplot(3,3,9); imshow(I(:,:,100)); title('Level Set');
-    hold on; contour(F(:,:,100),[0,0],'r'); hold off;
+    size(I)
+    axis equal;
+    disp(int32(X_l/2))
+    disp(int32(X_m/2))
+    disp(int32(X_n/2))
+    subplot(2,2,1); imshow(reshape(I(int32(X_l/2),:,:),[X_m,X_n])); title('X');
+    hold on; contour(reshape(F(int32(X_l/2),:, :),[X_m,X_n]),[0,0],'r');
+    
+    
+    subplot(2,2,2); imshow(reshape(I(:,int32(X_m/2),:),[X_l,X_n])); title('Y');
+    hold on; contour(reshape(F(:,int32(X_m/2),:),[X_l,X_n]),[0,0],'r');
+    
+    subplot(2,2,3); imshow(reshape(I(:,:,int32(X_n/2)),[X_l,X_m])); title('Z');
+    hold on; contour(reshape(F(:,:,int32(X_n/2)),[X_l,X_m]),[0,0],'r');
+    
+    %subplot(2,2,4); imshow(I(:,:,30)); title('Level Set');
+    %hold on; contour(F(:,:,30),[0,0],'r'); hold off;
+    
+    
+    
     
     %subplot(2,3,4); imshow(F(:,:,30)); title('Level Set');
     
@@ -139,14 +165,16 @@ for t = 0:dt:T
     %hold on; contour(F(),[0,0],'r'); hold off;
     %colormap gray;
    
-    hold off;
+    %hold off;
     %hold on; plot3(F==0)
+  
     %drawnow;
    
+    pause(3);
 end;
 figure;
-h = vol3d('cdata',F,'texture','3D'); 
-view(3);
 daspect([1 1 1]);
+colormap('gray');
 alphamap('default');
-alphamap(.1 .* alphamap);
+h = vol3d('cdata',255*(ones(size(F))-(F==0)),'texture','3D');
+view(3);
