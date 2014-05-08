@@ -2,23 +2,25 @@
 clear all; close all; clc; imtool close all;
 dbstop if error;
 
-% filename = 'mrtumor.jpg';
-% I = read_image(filename);
-% %curve_evolution(I);
-% KG = gaussian_curvature(I);
-% size(I)
 
-filename = '../data/MRHead.nrrd';
-[X, meta] = nrrdread(filename);
-h = vol3d('cdata',X,'texture','3D');
-view(3); 
-axis tight;  daspect([1 1 1]);
-alphamap('default');
-alphamap(.1 .* alphamap);
+T = 20;
 
-%alphamap('default');
-%alphamap(.01 .* alphamap);
-%set(gcf,'DoubleBuffer','on')
-%hold on; contour3(F); hold off;
-%f2 = figure;
-cv_3d(X,0.2);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Run on 3D slicer data
+
+%filename = '../data/MRHead.nrrd';
+%filename = '../data/MRBrainTumor1.nrrd';
+%filename = '../data/MRBrainTumor2.nrrd';
+%cv_3d(filename,'yes',T);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Run on synthetic data
+
+% Test Case 1 : Solid Sphere 
+%blob('solid',T);
+
+% Test Case 2 : Blob
+blob('blob',T);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

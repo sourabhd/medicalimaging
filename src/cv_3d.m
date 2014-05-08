@@ -1,4 +1,4 @@
-%function [F] = cv_3d(f, lambda)
+function [F] = cv_3d(f,readfile,T)
 
 % Chan-Vese Active Contours Segmentation using Level Sets
 % Input: Original grayscale image f
@@ -6,9 +6,13 @@
 % Output: Level Set Function Phi
 
 %Set default value for lambda if user does not provide lambda.
-clear all; close all; clc; 
-imtool close all;
+%clear all; close all; clc; 
+%imtool close all;
 dbstop if error;
+
+set(0,'Units','pixels') 
+scnsize = get(0,'ScreenSize');
+
 
 % filename = 'mrtumor.jpg';
 % I = read_image(filename);
@@ -16,11 +20,16 @@ dbstop if error;
 % KG = gaussian_curvature(I);
 % size(I)
 
-%filename = '../data/MRHead.nrrd';
-%filename = '../data/CTChest.nrrd';
-filename = '../data/PreDentalSurgery_1.nrrd';
-%filename = '../data/MRBrainTumor1.nrrd';
+if strcmp(readfile, 'yes')
+    %filename = '../data/MRHead.nrrd';
+    %filename = '../data/CTChest.nrrd';
+    %filename = '../data/PreDentalSurgery_1.nrrd';
+    %filename = '../data/MRBrainTumor1.nrrd';
+    filename = f;
 [X, meta] = nrrdread(filename);
+else
+    X = f;
+end
 
 size(X)
 [X_l, X_m, X_n] = size(X);
@@ -28,11 +37,16 @@ fprintf('Size of the 3D volume : %d %d %d\n', X_l, X_m, X_n);
 
 
 X([X>255]) = 255;
+f0 = figure;
+position = get(f0,'Position');
+outerpos = get(f0,'OuterPosition');
+borders = outerpos - position;
 h = vol3d('cdata',X,'texture','3D');
 view(3); 
 axis tight;  daspect([1 1 1]);
 alphamap('default');
 alphamap(.1 .* alphamap);
+hold off;
 
 %X(1:256,1:256,1:130) = 0;
 %X(25:75,25:75,25:75) = 240;
@@ -45,7 +59,7 @@ lambda = 0.1;
 %end;
 
 %Parameters
-T = 5;    %Stopping time
+%T = 10;    %Stopping time
 dt = 0.2;  %Time step
 a = 0.01;  %Fudge factor to avoid division by zero.
 epsilon = 0.1;  %Epsilon in delta approximation
@@ -93,8 +107,21 @@ F(:,:,:) = -1;
 F(b_m+1:m-b_m, b_n+1:n-b_n, b_p+1:p-b_p) = 1;
 
 
+disp(['Image size: ', num2str(size(I))]);
 
-figure;
+f1= figure;
+edge = -borders(1)/2;
+pos0 = [edge,...
+        scnsize(4) * (1/2),...
+        scnsize(3)/2 - edge,...
+        scnsize(4)/2];
+pos1 = [scnsize(3)/2 + edge,...
+        pos0(2),...
+        pos0(3),...
+        pos0(4)];
+set(f0,'OuterPosition',pos0);
+set(f1,'OuterPosition',pos1);
+ct = 0;
 for t = 0:dt:T
     %Approximate derivatives
     F_x = (F([2:m,m],:,:) - F(1:m,:,:))/2;
@@ -125,11 +152,12 @@ for t = 0:dt:T
     %subplot(1,3,1); 
     %
     tic;pause(0.01);toc;
-    size(I)
+    %size(I);
     axis equal;
-    disp(int32(X_l/2))
-    disp(int32(X_m/2))
-    disp(int32(X_n/2))
+    axis tight;
+    %disp(int32(X_l/2));
+    %disp(int32(X_m/2));
+    %disp(int32(X_n/2));
     subplot(2,2,1); imshow(reshape(I(int32(X_l/2),:,:),[X_m,X_n])); title('X');
     hold on; contour(reshape(F(int32(X_l/2),:, :),[X_m,X_n]),[0,0],'r');
     
@@ -169,12 +197,43 @@ for t = 0:dt:T
     %hold on; plot3(F==0)
   
     %drawnow;
-   
-    pause(3);
+    fprintf(2,'%d ... ', int32(ct));
+    ct = ct + 1;
+    pause(1);
 end;
-figure;
-daspect([1 1 1]);
-colormap('gray');
-alphamap('default');
-h = vol3d('cdata',255*(ones(size(F))-(F==0)),'texture','3D');
-view(3);
+hold off;
+
+% f2 = figure;
+% daspect([1 1 1]);
+% colormap('gray');
+% alphamap('default');
+% h = vol3d('cdata',255*(ones(size(F))-(F==0)),'texture','3D');
+% view(3);
+
+
+
+cm = colormap(gray);
+f2 = figure('Colormap',cm);
+pos2 = [0,...
+        0,...
+        scnsize(3)/2 - edge,...
+        scnsize(4)/2];
+set(f2,'OuterPosition',pos2);
+Ds = smooth3(F);
+hiso = patch(isosurface(F,5),...
+	'FaceColor',[1,.75,.65],...
+	'EdgeColor','none');
+isonormals(F,hiso)
+hcap = patch(isocaps(F,5),...
+	'FaceColor','interp',...
+	'EdgeColor','none');
+
+view(35,30) 
+axis tight 
+daspect([1,1,1])
+lightangle(45,30);
+set(gcf,'Renderer','zbuffer'); lighting phong
+set(hcap,'AmbientStrength',.6)
+set(hiso,'SpecularColorReflectance',0,'SpecularExponent',50)
+
+end
