@@ -4,6 +4,7 @@ function [F] = cv_3d(f,readfile,T)
 % Input: Original grayscale image f
 %        Parameter lambda (Try lambda=0.1)
 % Output: Level Set Function Phi
+% Reference: for 2D segmentation : http://www.math.ucla.edu/~wittman/Fields/ 
 
 %Set default value for lambda if user does not provide lambda.
 %clear all; close all; clc; 
