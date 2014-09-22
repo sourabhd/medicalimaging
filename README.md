@@ -1,6 +1,11 @@
 Implementation of Chan-Vese like segmentation algorithm for 3D medical images
 =============================================================================
 
+Authors:
+-------
+Ahsanul Karim <karim.ahsanul@gmail.com>
+Sourabh Daptardar <saurabh.daptardar@gmail.com>
+
 License:
 -------
 BSD
@@ -11,6 +16,10 @@ About the code:
 This software implements Chan-Vese like segmentation algorithm based upon level
 sets. Major differences are : 1. It uses 'gaussian' curvature, instead of mean
 curvature 2. Targeted for 3D objects rather than 2D images.
+
+This code was created for course project in medical imaging course 
+by Prof. Allen Tanenbaum at Stony Brook University.
+https://www.cs.stonybrook.edu/people/faculty/AllenTannenbaum
 
 Requires:
 --------
