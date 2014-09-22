@@ -3,8 +3,8 @@ Implementation of Chan-Vese like segmentation algorithm for 3D medical images
 
 Authors:
 -------
-Ahsanul Karim <karim.ahsanul@gmail.com>
-Sourabh Daptardar <saurabh.daptardar@gmail.com>
+* Ahsanul Karim <karim.ahsanul@gmail.com>
+* Sourabh Daptardar <saurabh.daptardar@gmail.com>
 
 License:
 -------
