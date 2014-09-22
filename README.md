@@ -32,6 +32,10 @@ Slicer3D sample data (MR images)  is placed in the data/ directory
 This data was obtained from Slicer 3D app :  http://www.slicer.org/
 Refer to the website for terms of usage.
 
+Demos
+-----
+* Blob: https://www.youtube.com/watch?v=lxOBL_5ZKCA
+* MR Head: https://www.youtube.com/watch?v=tsz1UCLJ4qw
 
 Also shipped along with the following third party codes which the software uses:
 -------------------------------------------------------------------------------
