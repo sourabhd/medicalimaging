@@ -1,0 +1,147 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Medicalimaging</title>
+  <meta name="description" content="Medical Imaging course project: http://sourabhd.github.io/medicalimaging/">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Medicalimaging</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Medical Imaging course project: http://sourabhd.github.io/medicalimaging/</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/sourabhd/medicalimaging/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/sourabhd/medicalimaging/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/sourabhd/medicalimaging" class="code">View Medicalimaging on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a id="implementation-of-chan-vese-like-segmentation-algorithm-for-3d-medical-images" class="anchor" href="#implementation-of-chan-vese-like-segmentation-algorithm-for-3d-medical-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implementation of Chan-Vese like segmentation algorithm for 3D medical images</h1>
+
+<h2>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors:</h2>
+
+<ul>
+<li>Ahsanul Karim <a href="mailto:karim.ahsanul@gmail.com">karim.ahsanul@gmail.com</a>
+</li>
+<li>Sourabh Daptardar <a href="mailto:saurabh.daptardar@gmail.com">saurabh.daptardar@gmail.com</a>
+</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License:</h2>
+
+<p>BSD</p>
+
+<h2>
+<a id="about-the-code" class="anchor" href="#about-the-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About the code:</h2>
+
+<p>This software implements Chan-Vese like segmentation algorithm based upon level
+sets. Major differences are : 1. It uses 'gaussian' curvature, instead of mean
+curvature 2. Targeted for 3D objects rather than 2D images.</p>
+
+<p>This code was created for course project in medical imaging course 
+by Prof. Allen Tanenbaum at Stony Brook University.
+<a href="https://www.cs.stonybrook.edu/people/faculty/AllenTannenbaum">https://www.cs.stonybrook.edu/people/faculty/AllenTannenbaum</a></p>
+
+<h2>
+<a id="requires" class="anchor" href="#requires" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requires:</h2>
+
+<p>MATLAB</p>
+
+<h2>
+<a id="steps-to-run" class="anchor" href="#steps-to-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Steps to run</h2>
+
+<p>On Matlab prompt:
+cd src/
+main</p>
+
+<p>main.m contains demos to run the Slicer3D sample data files as well as
+synthetic 3D dataset like 3D blobs, 3D solid sphere.</p>
+
+<h2>
+<a id="sample-data" class="anchor" href="#sample-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample data</h2>
+
+<p>Slicer3D sample data (MR images)  is placed in the data/ directory
+This data was obtained from Slicer 3D app :  <a href="http://www.slicer.org/">http://www.slicer.org/</a>
+Refer to the website for terms of usage.</p>
+
+<h2>
+<a id="demos" class="anchor" href="#demos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demos</h2>
+
+<ul>
+<li>Blob: <a href="https://www.youtube.com/watch?v=lxOBL_5ZKCA">https://www.youtube.com/watch?v=lxOBL_5ZKCA</a>
+</li>
+<li>MR Head: <a href="https://www.youtube.com/watch?v=tsz1UCLJ4qw">https://www.youtube.com/watch?v=tsz1UCLJ4qw</a>
+</li>
+</ul>
+
+<h2>
+<a id="also-shipped-along-with-the-following-third-party-codes-which-the-software-uses" class="anchor" href="#also-shipped-along-with-the-following-third-party-codes-which-the-software-uses" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Also shipped along with the following third party codes which the software uses:</h2>
+
+<ol>
+<li><p>nrrdread.m : Read NRRD images into matlab
+<a href="http://www.mathworks.com/matlabcentral/fileexchange/34653-nrrd-format-file-reader/content/nrrdread.m">http://www.mathworks.com/matlabcentral/fileexchange/34653-nrrd-format-file-reader/content/nrrdread.m</a> 
+BSD license</p></li>
+<li><p>vol3d.m : Render 3D graphics in matlab
+<a href="http://www.mathworks.com/matlabcentral/fileexchange/22940-vol3d-v2">http://www.mathworks.com/matlabcentral/fileexchange/22940-vol3d-v2</a>
+BSD license</p></li>
+</ol>
+
+<h2>
+<a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References:</h2>
+
+<ol>
+<li><p>Active Contours Without Edges, IEEE TRANSACTIONS ON IMAGE PROCESSING, VOL. 10, NO. 2, FEBRUARY 2001
+Tony F. Chan, and Luminita A. Vese
+<a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=902291">http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=902291</a></p></li>
+<li><p>Summer Research School on Medical Imaging, 2012, The Fields Institute for Research in Mathematical Sciences.
+Todd Wittman
+<a href="http://www.math.ucla.edu/%7Ewittman/Fields/">http://www.math.ucla.edu/~wittman/Fields/</a></p></li>
+<li><p>For general overview on level set methods
+<a href="http://www.museth.org/Ken/Publications_files/Breen-etal_SIG04.pdf">http://www.museth.org/Ken/Publications_files/Breen-etal_SIG04.pdf</a></p></li>
+</ol>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/sourabhd" class="avatar"><img src="https://avatars0.githubusercontent.com/u/1021310?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/sourabhd">sourabhd</a> maintains <a href="https://github.com/sourabhd/medicalimaging">Medicalimaging</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/sourabhd/medicalimaging/tarball/master" class="tar">tar</a><a href="https://github.com/sourabhd/medicalimaging/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
